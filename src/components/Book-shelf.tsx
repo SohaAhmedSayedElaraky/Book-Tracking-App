@@ -3,7 +3,8 @@ import Book from './Book'
 import {
     Link
   } from "react-router-dom"
-const Bookshelf = ({shelfTitle, allBooks, updateBookCategory}) => {
+import BookModel from '../models/book-model'
+const Bookshelf: React.FC<{shelfTitle:string,allBooks: BookModel[],updateBookCategory: Function}> = ({shelfTitle, allBooks, updateBookCategory}) => {
     const bookCategory = allBooks.filter((book) => book.shelf === shelfTitle)
     return ( 
         <div className="bookshelf">

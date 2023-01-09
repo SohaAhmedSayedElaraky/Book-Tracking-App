@@ -1,5 +1,4 @@
 import React from 'react'
-// import * as BooksAPI from './BooksAPI'
 import './App.css'
 import {
   BrowserRouter as Router,
@@ -11,6 +10,7 @@ import {
 import Home from './components/Home'
 import Search from './components/Search'
 import * as BooksAPI from './BooksAPI'
+import Book from './models/book-model'
 
 class BooksApp extends React.Component {
   
@@ -21,22 +21,23 @@ class BooksApp extends React.Component {
      * users can use the browser's back and forward buttons to navigate between
      * pages, as well as provide a good URL they can bookmark and share.
      */
-    showSearchPage: false,
-    books: [],
+    showSearchPage:false,
+    books:[],
     bookSearchText: '',
     searchedBooks: [],
     isSearchLoading: false
   }
 
-  componentDidMount() {
+  componentDidMount(): void {
    BooksAPI.getAll().then((response) => {
+    console.log(response);
    this.setState({
     books: response
    })
    })
   }
 
-  updateBookCategory = async (book,shelf) => {
+  updateBookCategory = async (book: Book,shelf: string) => {
    await BooksAPI.update(book, shelf)
    await BooksAPI.getAll().then((response) => {
       this.setState({
@@ -45,19 +46,19 @@ class BooksApp extends React.Component {
       })
   }
 
-  search = async (event) => {
+  search = async (event:any) => {
    await this.setState({
       bookSearchText: event.target.value
     })
     this.getSearchedBooks(this.state.bookSearchText)
   }
 
-  getSearchedBooks = async (searchText) => {
+  getSearchedBooks = async (searchText: string) => {
    await BooksAPI.search(searchText).then((response) => {
     if(response && !response.error) {
       this.setState({
-      searchedBooks: response.map((data) => {
-        this.state.books.forEach((item) => {
+      searchedBooks: response.map((data: Book) => {
+        this.state.books.forEach((item:Book) => {
           if(data.id === item.id) {
             data.shelf = item.shelf;
           }

@@ -3,7 +3,8 @@ import Bookshelf from './Book-shelf'
 import {
     Link
   } from "react-router-dom"
-const Home = ({allBooks,updateBookCategory}) => {
+import BookModel from '../models/book-model'
+const Home: React.FC<{allBooks:BookModel[],updateBookCategory: any}> = ({allBooks,updateBookCategory}) => {
     return (
           <div className="list-books">
             <div className="list-books-title">
