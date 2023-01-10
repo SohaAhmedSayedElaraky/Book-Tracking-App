@@ -7,10 +7,10 @@ import {
   Link
 } from "react-router-dom"
 
-import Home from './components/Home'
-import Search from './components/Search'
 import * as BooksAPI from './BooksAPI'
 import Book from './models/book-model'
+import Search from './pages/Search'
+import Home from './pages/Home'
 
 class BooksApp extends React.Component {
   
@@ -21,30 +21,13 @@ class BooksApp extends React.Component {
      * users can use the browser's back and forward buttons to navigate between
      * pages, as well as provide a good URL they can bookmark and share.
      */
-    showSearchPage:false,
     books:[],
     bookSearchText: '',
     searchedBooks: [],
     isSearchLoading: false
   }
 
-  componentDidMount(): void {
-   BooksAPI.getAll().then((response) => {
-    console.log(response);
-   this.setState({
-    books: response
-   })
-   })
-  }
-
-  updateBookCategory = async (book: Book,shelf: string) => {
-   await BooksAPI.update(book, shelf)
-   await BooksAPI.getAll().then((response) => {
-      this.setState({
-       books: response
-      })
-      })
-  }
+  
 
   search = async (event:any) => {
    await this.setState({
@@ -83,10 +66,10 @@ class BooksApp extends React.Component {
       <Router>
         <Switch>
           <Route path="/search">
-            <Search searchBooks= {this.search} updateBookCategory={this.updateBookCategory} isSearchLoading={this.state.isSearchLoading} allSearchedBooks={this.state.searchedBooks}/>
+            <Search searchBooks= {this.search} isSearchLoading={this.state.isSearchLoading} allSearchedBooks={this.state.searchedBooks}/>
           </Route>
           <Route path="/">
-            <Home allBooks={this.state.books} updateBookCategory={this.updateBookCategory}/>
+            <Home />
           </Route>
         </Switch>
     </Router>

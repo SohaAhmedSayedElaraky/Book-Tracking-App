@@ -1,12 +1,28 @@
 import React, { Component } from 'react'
 import BookModel from '../models/book-model'
+import * as BooksAPI from '../BooksAPI'
+import { useDispatch, useSelector } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import * as actionCreators from '../state/action-creators/actionCreators'
+import { RootState } from '../state/reducers';
 
-
-
-  const Book: React.FC<{book:BookModel,updateBookCategory: any}> = ({book, updateBookCategory}) => {
-  const  updateBookShelf = (event:any) => {
+  const Book: React.FC<{book:BookModel}> = ({book}) => {
+    const dispatch = useDispatch();
+    const { updateBookCategory } = bindActionCreators(actionCreators, dispatch)
+    const { getAllBooks } = bindActionCreators(actionCreators, dispatch);
+    let AllBooks: BookModel[] = useSelector((state: RootState) => state.book)
+     const  updateBookShelf = (event:any) => {
       updateBookCategory(book,event.target.value)
+      updateSelectedBook(book, event.target.value)
      }
+     const updateSelectedBook = (book: BookModel, shelf: any) => {
+      BooksAPI.update(book, shelf).then((updatedBook:any) => {
+        BooksAPI.getAll().then((books:any) => {
+          getAllBooks(books)
+          return AllBooks = books
+        })
+      })
+    }
      let imageUrl: any;
      book.imageLinks? imageUrl= book.imageLinks.smallThumbnail : imageUrl = ''
         return (

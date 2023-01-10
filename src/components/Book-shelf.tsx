@@ -1,18 +1,15 @@
 import React from 'react'
 import Book from './Book'
-import {
-    Link
-  } from "react-router-dom"
 import BookModel from '../models/book-model'
-const Bookshelf: React.FC<{shelfTitle:string,allBooks: BookModel[],updateBookCategory: Function}> = ({shelfTitle, allBooks, updateBookCategory}) => {
+const Bookshelf: React.FC<{shelfTitle:string,allBooks: BookModel[]}> = ({shelfTitle, allBooks}) => {
     const bookCategory = allBooks.filter((book) => book.shelf === shelfTitle)
     return ( 
         <div className="bookshelf">
-        <h2 className="bookshelf-title">{shelfTitle}</h2>
+        <h2 id="shelfTitle" className="bookshelf-title">{shelfTitle}</h2>
         <div className="bookshelf-books">
           <ol className="books-grid">
                 {
-                    bookCategory.map((book) => (<Book key={book.id} book={book} updateBookCategory={updateBookCategory}></Book>)
+                    bookCategory.map((book) => (<Book key={book.id} book={book}></Book>)
                        
                     )
                 }
