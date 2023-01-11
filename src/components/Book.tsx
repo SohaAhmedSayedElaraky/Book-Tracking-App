@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import BookModel from '../models/book-model'
 import * as BooksAPI from '../BooksAPI'
 import { useDispatch, useSelector } from 'react-redux';

@@ -1,16 +1,11 @@
 import React from 'react'
 import './App.css'
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
-} from "react-router-dom"
-
 import * as BooksAPI from './BooksAPI'
 import Book from './models/book-model'
 import Search from './pages/Search'
 import Home from './pages/Home'
+import { Routes, Route } from 'react-router-dom'
+import { BrowserRouter } from "react-router-dom";
 
 class BooksApp extends React.Component {
   
@@ -63,16 +58,18 @@ class BooksApp extends React.Component {
 
   render() {
     return (
-      <Router>
-        <Switch>
-          <Route path="/search">
-            <Search searchBooks= {this.search} isSearchLoading={this.state.isSearchLoading} allSearchedBooks={this.state.searchedBooks}/>
-          </Route>
-          <Route path="/">
-            <Home />
-          </Route>
-        </Switch>
-    </Router>
+      <div className="app">
+   <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/search" element={<Search searchBooks= {this.search} isSearchLoading={this.state.isSearchLoading} allSearchedBooks={this.state.searchedBooks}/>} />
+      </Routes>
+    </BrowserRouter>
+      </div>
+   
+
+        
+
     )
   }
 }
